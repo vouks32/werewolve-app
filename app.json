@@ -1,0 +1,111 @@
+{
+  "expo": {
+    "name": "werewolve",
+    "slug": "werewolve",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "werewolve",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "bundleIdentifier": "com.vouks.werewolve",
+      "supportsTablet": true,
+      "usesAppleSignIn": true,
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "remote-notification",
+          "fetch"
+        ],
+        "LSApplicationQueriesSchemes": [
+          "tiktok"
+        ]
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#000000"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": ""
+        }
+      },
+      "package": "com.vouks.werewolve",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "werewolve"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ]
+    },
+     "web": {
+      "build": {
+        "babel": {}
+      },
+      "bundler": "metro",
+      "favicon": "./assets/images/favicon.png",
+      "serviceWorker": {
+        "register": true,
+        "path": "firebase-messaging-sw.js"
+      },
+      "pwa": {
+        "name": "werewolve",
+        "themeColor": "#000000",
+        "backgroundColor": "#000000",
+        "display": "standalone",
+        "orientation": "portrait",
+        "startUrl": ".",
+        "icons": [
+          {
+            "src": "./assets/images/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+          },
+          {
+            "src": "./assets/images/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+          }
+        ]
+      }
+    },
+    "plugins": [
+      "expo-font",
+      "expo-asset",
+      "expo-web-browser",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#000000",
+          "mode": "production"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "3f8bb094-5779-4813-b506-b0a2084afc71"
+      }
+    }
+  }
+}
