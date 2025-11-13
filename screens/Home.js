@@ -97,7 +97,6 @@ export default function App() {
     });
   };
 
-
   const renderMessage = ({ item }) => {
     if (item.type === 'date') {
       return (
