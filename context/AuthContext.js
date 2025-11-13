@@ -29,6 +29,21 @@ export const AuthProvider = ({ children }) => {
   const [promptDescription, setPromptDescription] = useState('')
   const [promptButtons, setPromptButtons] = useState([])
 
+
+  const ws = new WebSocket('ws://51.20.105.210:8088');
+
+  ws.addEventListener('error', console.error);
+
+  ws.addEventListener('open', function open() {
+    ws.send(JSON.stringify({ type: 'init' }));
+  });
+
+  ws.addEventListener('message', function message(data) {
+    console.log('received: %s', JSON.stringify(data, null, 2));
+  });
+
+
+
   ///////  TOASTS
   const AddToasts = (title, body, onClose = null, buttons = [], image = null, duration = 3000) => {
     let f = (s = setShowToast, t = setToast, cst = setCanShowToast) => {

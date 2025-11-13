@@ -97,6 +97,7 @@ export default function App() {
     });
   };
 
+
   const renderMessage = ({ item }) => {
     if (item.type === 'date') {
       return (
@@ -200,7 +201,7 @@ export default function App() {
             <Ionicons name="options" size={24} color="#007bff" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.iconButton, {marginLeft : 10}]} onPress={() => {
+          <TouchableOpacity style={[styles.iconButton, { marginLeft: 10 }]} onPress={() => {
             if (!showMenu) {
               setShowMenu(true)
               popIn()
@@ -208,7 +209,7 @@ export default function App() {
               popOut()
             }
           }}>
-          <Ionicons size={24} color={"#007bff"} name='document' />
+            <Ionicons size={24} color={"#007bff"} name='document' />
           </TouchableOpacity>
 
           <TextInput
