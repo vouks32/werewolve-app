@@ -174,7 +174,7 @@ const Message = ({ item, onDrag, messages, onQuoteClicked, backgroundColor, high
         return (
             <Animated.View
                 {...panResponder.panHandlers}
-                style={{ transform: [{ translateX }], paddingHorizontal: 10, flexDirection: !isMe ? "row" : 'row-reverse', width: '100%', flexGrow: 1, backgroundColor: highlightedQuote == item.key.id ? backgroundColor : '#fff0' }}>
+                style={{ transform: [{ translateX }], paddingHorizontal: 10, flexDirection: !isMe ? "row" : 'row-reverse', width: '100%', flexGrow: 1, backgroundColor: highlightedQuote == item.key.id ? backgroundColor : '#fff0', marginTop: 10 }}>
                 {!isMe && (prevMessage?.key.senderNumber !== item.key.senderNumber || !prevMessage) &&
 
                     <View style={{ paddingRight: 5 }}>

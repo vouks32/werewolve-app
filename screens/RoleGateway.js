@@ -7,7 +7,7 @@ const validateEmail = (email) => {
   return /[a-z]/i.test(email);
 };
 
-const colorPalette = ["#FF0000", "#00FF00", "#0000FF", "#FF00FF", "#00FFFF", "#FFFF00", "#1A1A1A", // Near-black grey
+const colorPalette = ["#550000ff", "#004f00ff", "#00005dff", "#4f004fff", "#004f4fff", "#535300ff", "#1A1A1A", // Near-black grey
   "#303030", // Dark grey
   "#400000", // Dark red
   "#004000", // Dark green
