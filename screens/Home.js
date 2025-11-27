@@ -571,7 +571,6 @@ export default function App() {
             AsyncStorage.setItem('lastBotMessageId', privateMessages[privateMessages.length - 1].key.id)
           }} />
 
-
         </Modal>
 
       </KeyboardAvoidingView>
