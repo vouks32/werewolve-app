@@ -127,7 +127,7 @@ const RoleGateway = ({ navigation }) => {
         />
 
         <Button
-          title={"Create Creator Account"}
+          title={"Créer un compte"}
           onPress={() => handleSubmit()}
           color="#FF0050"
         />

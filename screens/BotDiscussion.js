@@ -267,7 +267,7 @@ export default function PrivateDiscussion({ height, onclose, editable, onScrolle
                     )}
                     keyExtractor={(item) => item.key.id}
                     contentContainerStyle={styles.chatContainer}
-                    onScrollToBottom={() => onScrolledToBottom()}
+                    onEndReached={() => onScrolledToBottom()}
                     ListEmptyComponent={() => {
                         if (!privateMessages) {
                             return (<ActivityIndicator size={'large'} style={{ alignSelf: "center" }} />)

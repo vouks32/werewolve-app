@@ -72,6 +72,8 @@ export default function App() {
         if (i !== privateMessages.length - 1) {
           setNewBotMessage(true)
         }
+      } else {
+        setNewBotMessage(true)
       }
     }
 
@@ -369,11 +371,6 @@ export default function App() {
               messages={messages}
             />
           )}
-          onEndReached={() => {
-            if (messages.length > 0) {
-
-            }
-          }}
           keyExtractor={(item) => item.key.id}
           contentContainerStyle={styles.chatContainer}
           ListEmptyComponent={() => {
@@ -492,7 +489,7 @@ export default function App() {
                 OpenPrivateDiscussion('game')
               }}>
                 <Ionicons name="chatbox-ellipses" size={24} color="#075E54" />
-                {newBotMessage && <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: "#960606ff", position: "absolute", top: 0, right: 0 }} />}
+                {newBotMessage && <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: "#f64343ff", position: "absolute", top: 0, right: 0 }} />}
               </TouchableOpacity>
 
               <TouchableOpacity style={[styles.iconButton, { marginLeft: 10 }]} onPressIn={() => {
@@ -567,8 +564,10 @@ export default function App() {
           }}
         >
           <PrivateDiscussion height={windowHeight} onclose={ClosePrivateDiscussion} editable={Editable} onScrolledToBottom={async () => {
-            setNewBotMessage(false)
-            await AsyncStorage.setItem('lastBotMessageId', privateMessages[privateMessages.length - 1].key.id)
+            setTimeout(() => {
+              setNewBotMessage(false)
+              AsyncStorage.setItem('lastBotMessageId', privateMessages?.[privateMessages?.length - 1]?.key?.id || '')
+            }, 50)
           }} />
 
         </Modal>

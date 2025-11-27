@@ -31,20 +31,20 @@ const AppNavigator = () => {
             name="Home"
             component={Home}
             options={{ headerShown: false }}
-          
+
           />
         </>
       ) : (
         <>
           <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{ title: 'Login' }}
-          />
-          <Stack.Screen
             name="RoleGateway"
             component={RoleGateway}
-            options={{ title: 'Create Account' }}
+            options={{ title: 'Créer un Compte' }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{ title: 'Se connecter' }}
           />
         </>
       )}

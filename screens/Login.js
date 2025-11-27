@@ -21,7 +21,7 @@ const Login = ({ navigation }) => {
     try {
       const credentials = {
         number,
-        jid : number,
+        jid: number,
         password,
       };
 
@@ -47,7 +47,7 @@ const Login = ({ navigation }) => {
     <KeyboardAvoidingView
       behavior="height"
       style={styles.container}>
-      <Text style={styles.title}>Welcome Back</Text>
+      <Text style={styles.title}>Bienvenue</Text>
 
       {!isValidEmail && <Text style={{ color: "red" }}>Uniquement un numéro d'au moin 9 chiffres</Text>}
       <TextInput
@@ -59,7 +59,7 @@ const Login = ({ navigation }) => {
       />
 
       <TextInput
-        placeholder="Password"
+        placeholder="Mot de passe"
         value={password}
         onChangeText={setPassword}
         style={[styles.input, { borderColor: isValidPassword ? "#333" : "#933" }]}
@@ -67,7 +67,7 @@ const Login = ({ navigation }) => {
       />
 
       <Button
-        title={isLoading ? "Signing In..." : "Login"}
+        title={isLoading ? "Connexion en cours..." : "Se connecter"}
         onPress={handleLogin}
         disabled={isLoading}
         color="#FF0050"
@@ -78,7 +78,7 @@ const Login = ({ navigation }) => {
         onPress={() => navigation.navigate('RoleGateway')}
       >
         <Text style={styles.switchText}>
-          Don't have an account? Sign up
+          Pas de compte? Créer un
         </Text>
       </TouchableOpacity>
     </KeyboardAvoidingView>

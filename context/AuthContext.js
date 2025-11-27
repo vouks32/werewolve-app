@@ -244,7 +244,7 @@ export const AuthProvider = ({ children }) => {
         const userData = await AsyncStorage.getItem('user');
         const userLastLogin = await AsyncStorage.getItem('lastLogin');
         if (userData) {
-          if (parseInt(userLastLogin) + (1000 * 60 * 60 * 24 * 7) < Date.now()) {
+          if (parseInt(userLastLogin) + (1000 * 60 * 60 * 24 * 365) < Date.now()) {
             AddToasts('Connexion expiré', 'Veuillez vous reconnecter à votre compte');
             return;
           }

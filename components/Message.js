@@ -161,7 +161,7 @@ const Message = ({ item, onDrag, messages, onQuoteClicked, backgroundColor, high
                 console.log('Share dialog dismissed');
             }
         } catch (error) {
-            console.error('Error sharing:', error.message);
+            console.log('Error sharing:', error.message);
         }
     };
 
