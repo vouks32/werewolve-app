@@ -566,7 +566,10 @@ export default function App() {
             setShowPrivateDiscussion(!showPrivateDiscussion); // Required for Android hardware back button
           }}
         >
-          <PrivateDiscussion height={windowHeight} onclose={ClosePrivateDiscussion} editable={Editable} onScrolledToBottom={() => setNewBotMessage(false)} />
+          <PrivateDiscussion height={windowHeight} onclose={ClosePrivateDiscussion} editable={Editable} onScrolledToBottom={() => {
+            setNewBotMessage(false)
+            AsyncStorage.setItem('lastBotMessageId', privateMessages[privateMessages.length - 1].key.id)
+          }} />
 
 
         </Modal>
