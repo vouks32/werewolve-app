@@ -8,6 +8,7 @@ import MyInfiniteScrollList from '../components/StickersList';
 import * as Progress from 'react-native-progress';
 import { LazyLoadedImage } from '../components/LazyLoadImage';
 import PrivateDiscussion from './BotDiscussion';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function App() {
 
@@ -23,6 +24,7 @@ export default function App() {
   const [audioTimer, setAudioTimer] = useState(0);
   const audioTimerTimer = useRef(null);
   const [isRecording, setIsRecording] = useState(false);
+  const [newBotMessage, setNewBotMessage] = useState(false);
   const cancelRecordingRef = useRef(false);
   const [cancelRecording, setCancelRecording] = useState(false);
 
@@ -34,7 +36,7 @@ export default function App() {
   const MenuAnim = useRef(new Animated.Value(0)).current; // Initial scale is 0
   const messageScrollList = useRef(null); // Initial scale is 0
   const textInputRef = useRef(null); // Initial scale is 0
-  const { sendMessage, user, messages, onlineUsers, sendAudio, baseUrl, games, stickers } = useAuth();
+  const { sendMessage, user, messages, privateMessages, onlineUsers, sendAudio, baseUrl, games, stickers } = useAuth();
 
   const animatedValue = useRef(new Animated.Value(1)).current;
   const animateColor = () => {
@@ -60,6 +62,23 @@ export default function App() {
       animateColor()
     }
   }, [highlightedQuote])
+
+  useEffect(() => {
+
+    const checkLastBotMessageSeen = async () => {
+      const lastBotMessageId = await AsyncStorage.getItem('lastBotMessageId')
+      if (lastBotMessageId) {
+        const i = privateMessages.findIndex(_m => _m.key.id == lastBotMessageId)
+        if (i < privateMessages.length - 1) {
+          setNewBotMessage(true)
+        }
+      }
+    }
+
+    if (privateMessages.length > 0) {
+      checkLastBotMessageSeen()
+    }
+  }, [privateMessages])
 
 
   const triggered = useState(false);
@@ -350,6 +369,11 @@ export default function App() {
               messages={messages}
             />
           )}
+          onEndReached={() => {
+            if (messages.length > 0) {
+
+            }
+          }}
           keyExtractor={(item) => item.key.id}
           contentContainerStyle={styles.chatContainer}
           ListEmptyComponent={() => {
@@ -467,7 +491,8 @@ export default function App() {
               <TouchableOpacity style={styles.iconButton} onPressIn={() => {
                 OpenPrivateDiscussion('game')
               }}>
-                <Ionicons name="game-controller" size={24} color="#075E54" />
+                <Ionicons name="chatbox-ellipses" size={24} color="#075E54" />
+                {newBotMessage && <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: "#960606ff", position: "absolute", top: 0, right: 0 }} />}
               </TouchableOpacity>
 
               <TouchableOpacity style={[styles.iconButton, { marginLeft: 10 }]} onPressIn={() => {
@@ -541,7 +566,7 @@ export default function App() {
             setShowPrivateDiscussion(!showPrivateDiscussion); // Required for Android hardware back button
           }}
         >
-          <PrivateDiscussion height={windowHeight} onclose={ClosePrivateDiscussion} editable={Editable} />
+          <PrivateDiscussion height={windowHeight} onclose={ClosePrivateDiscussion} editable={Editable} onScrolledToBottom={() => setNewBotMessage(false)} />
 
 
         </Modal>

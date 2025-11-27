@@ -8,7 +8,7 @@ import MyInfiniteScrollList from '../components/StickersList';
 import * as Progress from 'react-native-progress';
 import { LazyLoadedImage } from '../components/LazyLoadImage';
 
-export default function PrivateDiscussion({ height, onclose, editable }) {
+export default function PrivateDiscussion({ height, onclose, editable, onScrolledToBottom }) {
 
     const screenWidth = Dimensions.get("window").width;
     const [isFocused, setIsFocused] = useState(false);
@@ -229,7 +229,7 @@ export default function PrivateDiscussion({ height, onclose, editable }) {
     };
 
     return (
-        <View style={{ maxHeight: height, flex: 1, backgroundColor : '#2229'  }}>
+        <View style={{ maxHeight: height, flex: 1, backgroundColor: '#2229' }}>
             <View style={[styles.container]}>
 
                 {/* Header */}
@@ -267,6 +267,7 @@ export default function PrivateDiscussion({ height, onclose, editable }) {
                     )}
                     keyExtractor={(item) => item.key.id}
                     contentContainerStyle={styles.chatContainer}
+                    onScrollToBottom={() => onScrolledToBottom()}
                     ListEmptyComponent={() => {
                         if (!privateMessages) {
                             return (<ActivityIndicator size={'large'} style={{ alignSelf: "center" }} />)
@@ -345,7 +346,7 @@ export default function PrivateDiscussion({ height, onclose, editable }) {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#ece5dd', marginTop : 70,  borderTopLeftRadius : 15, borderTopRightRadius : 15 },
+    container: { flex: 1, backgroundColor: '#ece5dd', marginTop: 70, borderTopLeftRadius: 15, borderTopRightRadius: 15 },
 
     header: {
         flexDirection: 'row',
@@ -353,8 +354,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#075E54',
         paddingHorizontal: 10,
         paddingVertical: 12,
-        borderTopLeftRadius : 15, 
-        borderTopRightRadius : 15
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15
     },
     headerInfo: { flexDirection: 'row', alignItems: 'center', flex: 1, marginLeft: 10 },
     avatar: { width: 36, height: 36, borderRadius: 18, backgroundColor: '#bbb', marginRight: 8 },
