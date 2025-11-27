@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions, PanResponder, Animated, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions, PanResponder, Animated, ActivityIndicator, Linking, Share } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress';
@@ -144,14 +144,31 @@ const Message = ({ item, onDrag, messages, onQuoteClicked, backgroundColor, high
         );
     }
 
+
+    const onShare = async (message = 'Venez jouer à Werewolve avec moi!', title = 'JEU DU LOUP') => {
+        try {
+            const result = await Share.share({ title, message });
+            if (result.action === Share.sharedAction) {
+                if (result.activityType) {
+                    // Shared with activity type of result.activityType
+                    console.log('Shared with activity type:', result.activityType);
+                } else {
+                    // Shared
+                    console.log('Shared successfully');
+                }
+            } else if (result.action === Share.dismissedAction) {
+                // Dismissed
+                console.log('Share dialog dismissed');
+            }
+        } catch (error) {
+            console.error('Error sharing:', error.message);
+        }
+    };
+
+
+
+
     const isMe = item.key.fromMe;
-
-
-    const MessageContainer = () => (
-        <>
-
-        </>
-    )
 
     if (draggable)
         return (
@@ -217,6 +234,10 @@ const Message = ({ item, onDrag, messages, onQuoteClicked, backgroundColor, high
                         {(new Date(item.time)).toLocaleTimeString('En-GB', { hour: '2-digit', minute: "2-digit" })}
                     </Text>
                 </View>
+
+                {item.key.senderNumber === 'bot' && <TouchableOpacity onPress={() => { onShare(window.location.href + '\n\nVenez jouer à Werewolve🐺 avec moi!', 'JEU DU LOUP') }} style={{ backgroundColor: '#ffffff9d', padding: 5, borderRadius: 50, alignSelf: 'center', marginHorizontal: 10 }}>
+                    <Ionicons name="share-social-outline" size={16} color="#aaaaaa" />
+                </TouchableOpacity>}
             </Animated.View>
         );
     else

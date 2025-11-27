@@ -1,10 +1,12 @@
 import React from "react";
 import { Text, View } from "react-native";
+import { useAuth } from "../context/AuthContext";
 
 export default function MessageFormatter({ message }) {
   // Découper le message par lignes
   const fontSize = 14;
   const lines = message.split("\n");
+  const { allUsers } = useAuth();
 
   // Fonction pour formater une seule ligne
   const formatLine = (line) => {
@@ -65,10 +67,18 @@ export default function MessageFormatter({ message }) {
 
     return parts.map((p, i) => (
       <Text key={i} style={p.style}>
-        {p.text}
+        {replaceMentionsWithName(p.text)}
       </Text>
     ));
   };
+
+  const replaceMentionsWithName = (text) => {
+    const regex = /@\w+/g; // Recherche des mentions
+    return text.replace(regex, (match) => {
+      const user = allUsers.find((user) => user.number === match.substring(1));
+      return user ? user.username : match;
+    });
+  }
 
   return (
     <View style={{ padding: 0 }}>
