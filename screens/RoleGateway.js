@@ -2,27 +2,33 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, TextInput, Button, Text, StyleSheet, KeyboardAvoidingView, Image, TouchableOpacity, ActivityIndicator, Alert, Linking } from 'react-native';
 import { useAuth, TiktokUsernameSearch } from '../context/AuthContext';
 
+
 const validateEmail = (email) => {
-  return String(email)
-    .toLowerCase()
-    .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    );
+  return /[a-z]/i.test(email);
 };
 
+const colorPalette = ["#FF0000", "#00FF00", "#0000FF", "#FF00FF", "#00FFFF", "#FFFF00", "#1A1A1A", // Near-black grey
+  "#303030", // Dark grey
+  "#400000", // Dark red
+  "#004000", // Dark green
+  "#000040", // Dark blue
+  "#400040", // Dark purple
+  "#58321E", // Dark brown
+  "#1C1C1C"  // Another very dark grey
+];
 
 
 const RoleGateway = ({ navigation }) => {
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [number, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const emailRef = useRef(null);
 
   const { login, reloadUser, baseUrl } = useAuth();
- 
+
   const handleSubmit = async () => {
-    if (email.length == 0 || phone.length == 0 || password.length == 0 ) {
+    if (email.length == 0 || number.length == 0 || password.length == 0) {
       Alert.alert("Please, enter all necessary informations")
       return
     }
@@ -37,12 +43,22 @@ const RoleGateway = ({ navigation }) => {
 
     try {
       const credentials = {
+        jid: number,
         email,
-        phone,
+        admin: false,
+        number,
         password,
         username,
-        points : 0,
-        canReceiveAlerts : true
+        canReceiveAlerts: true,
+        color: colorPalette[Math.floor(Math.random() * colorPalette.length)],
+        online: false,
+        lid: number,
+        groups: ["werewolve-111"],
+        dateCreated: Date.now(),
+        pushName: username,
+        games: { WEREWOLF: 0 },
+        points: 50,
+        pointsTransactions: []
       };
       await login(credentials);
     } catch (error) {
@@ -76,12 +92,12 @@ const RoleGateway = ({ navigation }) => {
       <View>
         <Text style={styles.title}>WEREWOLVE 3.0 🐺</Text>
 
-          <TextInput
-            placeholder="Ex: PiouPiou"
-            value={username}
-            onChangeText={setUsername}
-            style={[styles.input]}
-          />
+        <TextInput
+          placeholder="Pseudo"
+          value={username}
+          onChangeText={setUsername}
+          style={[styles.input]}
+        />
 
 
         <TextInput
@@ -95,11 +111,11 @@ const RoleGateway = ({ navigation }) => {
         />
 
         <TextInput
-          placeholder="Numéro whatsapp"
-          value={phone}
+          placeholder="Numéro whatsapp Ex: 650687834"
+          value={number}
           onChangeText={setPhone}
           style={styles.input}
-          keyboardType="phone-pad"
+          keyboardType="number-pad"
         />
 
         <TextInput
@@ -111,7 +127,7 @@ const RoleGateway = ({ navigation }) => {
         />
 
         <Button
-          title={ "Create Creator Account"}
+          title={"Create Creator Account"}
           onPress={() => handleSubmit()}
           color="#FF0050"
         />

@@ -31,6 +31,7 @@ const AppNavigator = () => {
             name="Home"
             component={Home}
             options={{ headerShown: false }}
+          
           />
         </>
       ) : (

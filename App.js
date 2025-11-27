@@ -30,7 +30,7 @@ export default function App() {
         true || isStandalone() ||(window.location.host.includes('zrok')) /** Development purposes */ ?
           <NavigationContainer linking={linking}>
             < AuthProvider >
-              <AppNavigator />
+              <AppNavigator  />
             </AuthProvider >
           </NavigationContainer >
           :

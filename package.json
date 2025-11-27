@@ -24,8 +24,11 @@
     "expo-task-manager": "13.1.6",
     "expo-web-browser": "~14.2.0",
     "firebase": "^11.10.0",
+    "lamejs": "^1.2.1",
     "react": "19.0.0",
     "react-dom": "19.0.0",
+    "react-intersection-observer": "^10.0.0",
+    "react-lazy-load-image-component": "^1.6.3",
     "react-native": "0.79.5",
     "react-native-chart-kit": "^6.12.0",
     "react-native-flutterwave": "^1.0.0",
@@ -38,11 +41,15 @@
     "react-native-svg": "15.11.2",
     "react-native-web": "^0.20.0",
     "react-native-webview": "13.13.5",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
     "ws": "^8.18.3"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
-    "@babel/plugin-transform-class-static-block": "^7.28.3"
+    "@babel/plugin-transform-class-static-block": "^7.28.3",
+    "patch-package": "^8.0.1",
+    "postinstall-postinstall": "^2.1.0"
   },
   "name": "werewolve",
   "version": "1.0.0",
@@ -51,6 +58,7 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "postinstall": "patch-package"
   }
 }

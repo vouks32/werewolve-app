@@ -3,17 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { View, TextInput, Button, Text, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 
-const validateEmail = (email) => {
-  return String(email)
-    .toLowerCase()
-    .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    );
+const validateEmail = (number) => {
+  return /[0-9]/.test(number);
 };
 
 const Login = ({ navigation }) => {
   const [userType, setUserType] = useState('creator');
-  const [email, setEmail] = useState('');
+  const [number, setNumber] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(true);
@@ -24,59 +20,60 @@ const Login = ({ navigation }) => {
     setIsLoading(true);
     try {
       const credentials = {
-        email,
+        number,
+        jid : number,
         password,
       };
-      
+
       await login(credentials, true);
       // Navigation handled automatically by auth context
     } catch (error) {
-      alert('Login failed: ' + error.message);
+      alert('connexion échoué: ' + error.message);
     } finally {
       setIsLoading(false);
     }
   };
 
-  useEffect(()=>{
-    setIsValidEmail((validateEmail(email) != null && email.split('.')[ email.split('.').length-1].length < 4))
-  },[email])
-  
-  useEffect(()=>{
+  useEffect(() => {
+    setIsValidEmail((validateEmail(number) && number.length > 8))
+  }, [number])
+
+  useEffect(() => {
     setIsValidPassword(password.length > 8)
-  },[password])
+  }, [password])
 
 
   return (
-    <KeyboardAvoidingView 
+    <KeyboardAvoidingView
       behavior="height"
-     style={styles.container}>
+      style={styles.container}>
       <Text style={styles.title}>Welcome Back</Text>
 
+      {!isValidEmail && <Text style={{ color: "red" }}>Uniquement un numéro d'au moin 9 chiffres</Text>}
       <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={(text) => setEmail(text.toLocaleLowerCase())}
-        style={[styles.input,{borderColor: isValidEmail? "#333" : "#933"}]}
-        keyboardType="email-address"
-        autoCapitalize="none"
+        placeholder="Numéro Whatsapp"
+        value={number}
+        onChangeText={(text) => setNumber(text.toLocaleLowerCase())}
+        style={[styles.input, { borderColor: isValidEmail ? "#333" : "#933" }]}
+        keyboardType='numeric'
       />
-      
+
       <TextInput
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
-        style={[styles.input,{borderColor: isValidPassword? "#333" : "#933"}]}
+        style={[styles.input, { borderColor: isValidPassword ? "#333" : "#933" }]}
         secureTextEntry
       />
-      
-      <Button 
-        title={isLoading ? "Signing In..." : "Login"} 
+
+      <Button
+        title={isLoading ? "Signing In..." : "Login"}
         onPress={handleLogin}
         disabled={isLoading}
         color="#FF0050"
       />
-      
-      <TouchableOpacity 
+
+      <TouchableOpacity
         style={styles.switchAuth}
         onPress={() => navigation.navigate('RoleGateway')}
       >
