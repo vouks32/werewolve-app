@@ -69,13 +69,13 @@ export default function App() {
       const lastBotMessageId = await AsyncStorage.getItem('lastBotMessageId')
       if (lastBotMessageId) {
         const i = privateMessages.findIndex(_m => _m.key.id == lastBotMessageId)
-        if (i < privateMessages.length - 1) {
+        if (i !== privateMessages.length - 1) {
           setNewBotMessage(true)
         }
       }
     }
 
-    if (privateMessages.length > 0) {
+    if (privateMessages?.length > 0) {
       checkLastBotMessageSeen()
     }
   }, [privateMessages])
@@ -566,9 +566,9 @@ export default function App() {
             setShowPrivateDiscussion(!showPrivateDiscussion); // Required for Android hardware back button
           }}
         >
-          <PrivateDiscussion height={windowHeight} onclose={ClosePrivateDiscussion} editable={Editable} onScrolledToBottom={() => {
+          <PrivateDiscussion height={windowHeight} onclose={ClosePrivateDiscussion} editable={Editable} onScrolledToBottom={async () => {
             setNewBotMessage(false)
-            AsyncStorage.setItem('lastBotMessageId', privateMessages[privateMessages.length - 1].key.id)
+            await AsyncStorage.setItem('lastBotMessageId', privateMessages[privateMessages.length - 1].key.id)
           }} />
 
         </Modal>
