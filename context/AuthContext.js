@@ -180,7 +180,7 @@ export const AuthProvider = ({ children }) => {
   // Handle notifications from server
   const handleNotification = async (notification) => {
     console.log('Received notification:', notification);
-    const _user =  JSON.parse(await AsyncStorage.getItem('user'))
+    const _user = JSON.parse(await AsyncStorage.getItem('user'))
 
     switch (notification.type) {
       case 'message':
@@ -428,7 +428,7 @@ export const AuthProvider = ({ children }) => {
   }
 
 
-  const sendNotification = async (receivers, topic, title = '', body = "", data = {}, sender = { email: 'Kolabo' }) => {
+  const sendNotification = async (receivers, topic, title = '', body = "", data = {}, sender = { email: 'werewolve' }) => {
     if ((!receivers || receivers.length === 0) && !topic) return false;
 
     const _data = {
